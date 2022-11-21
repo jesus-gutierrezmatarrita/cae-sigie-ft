@@ -1,4 +1,4 @@
-# cae-sigie-ft
+# Consultas sobre actividades académicas SIGIE
 
 El sistema de información permitirá incrementar el atractivo de la carrera a su po-
 blación graduada. El nuevo módulo facilitará obtener mecanismos de retroalimentación,
