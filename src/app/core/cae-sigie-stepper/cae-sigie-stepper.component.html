@@ -1,0 +1,112 @@
+<p>Publicación de solicitud de apoyo para la realización de una actividad académica, dirigida a la población graduada de
+    la carrera de Informática Empresarial</p>
+<mat-stepper>
+    <mat-step>
+        <form>
+            <ng-template matStepLabel>Actividad académica</ng-template>
+            <hr>
+            <h1>Información de la actividad académica</h1>
+            <mat-form-field appearance="fill">
+                <mat-label>Nombre de la actividad</mat-label>
+                <input matInput type="text" required>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill">
+                <mat-label>Descripción de la actividad</mat-label>
+                <textarea matInput></textarea>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill">
+                <mat-label>Alternativa 1 de fecha de la actividad</mat-label>
+                <input matInput [matDatepicker]="pickerAlt1" required>
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="pickerAlt1"></mat-datepicker-toggle>
+                <mat-datepicker #pickerAlt1></mat-datepicker>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill">
+                <mat-label>Alternativa 2 de fecha de la actividad</mat-label>
+                <input matInput [matDatepicker]="pickerAlt2" required>
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="pickerAlt2"></mat-datepicker-toggle>
+                <mat-datepicker #pickerAlt2></mat-datepicker>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill">
+                <mat-label>Periodo de aceptación</mat-label>
+                <input matInput [matDatepicker]="pickerAlt1" required>
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="pickerAlt1"></mat-datepicker-toggle>
+                <mat-datepicker #pickerAlt1></mat-datepicker>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill">
+                <mat-label>Tipo de actividad</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let activity_type of activity_types" [value]="activity_type.id">
+                        {{activity_type.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill">
+                <mat-label>Modalidad</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let modality of modalities" [value]="modality.id">
+                        {{modality.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill">
+                <mat-label>Recinto organizador</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let campus of campuses" [value]="campus.id">
+                        {{campus.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <br>
+            <button mat-button matStepperNext>Siguiente</button>
+        </form>
+    </mat-step>
+    <mat-step>
+        <form>
+            <ng-template matStepLabel>Persona encargada</ng-template>
+            <hr>
+            <h1>Información de la persona responsable de la actividad académica</h1>
+            <mat-form-field appearance="fill">
+                <mat-label>Correo electrónico</mat-label>
+                <input type="email" matInput required>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill">
+                <mat-label>Nombre</mat-label>
+                <input type="text" matInput required>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill">
+                <mat-label>Apellidos</mat-label>
+                <input type="text" matInput required>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="fill">
+                <mat-label>Teléfono (opcional)</mat-label>
+                <input type="tel" matInput>
+            </mat-form-field>
+            <br>
+            <button mat-button matStepperNext>Siguiente</button>
+        </form>
+    </mat-step>
+    <mat-step>
+        <form>
+            <ng-template matStepLabel>Resumen</ng-template>
+            <hr>
+            <h1>Información de la actividad académica</h1>
+
+            <h1>Información de la persona responsable de la actividad académica</h1>
+            
+            <button mat-button matStepperNext>Publicar</button>
+        </form>
+    </mat-step>
+</mat-stepper>
