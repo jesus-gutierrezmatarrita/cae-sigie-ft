@@ -5,3 +5,26 @@
 .mat-form-field {
     margin-top: 16px;
 }
+
+.container-labels-activities{
+    width: 800px;
+    height: 400px;
+    margin-left: 20px;
+
+}
+
+
+.container-summary{
+    width: 1000px;
+    height: 900px;
+    margin-left: 20px;
+
+}
+
+.container-labels-person{
+    width: 800px;
+    height: 225px;
+    margin-left: 20px;
+}
+
+
