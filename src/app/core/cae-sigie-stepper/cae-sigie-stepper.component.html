@@ -48,8 +48,8 @@
                 <mat-form-field appearance="fill">
                     <mat-label>Tipo de actividad</mat-label>
                     <mat-select>
-                        <mat-option *ngFor="let activity_type of activity_types" [value]="activity_type.id">
-                            {{activity_type.name}}
+                        <mat-option *ngFor="let activity_type of activity_types" [value]="activity_type.idTipo">
+                            {{activity_type.nombreTipo}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -66,8 +66,8 @@
                 <mat-form-field appearance="fill">
                     <mat-label>Recinto organizador</mat-label>
                     <mat-select>
-                        <mat-option *ngFor="let campus of campuses" [value]="campus.id">
-                            {{campus.name}}
+                        <mat-option *ngFor="let campus of campuses" [value]="campus.idRecinto">
+                            {{campus.nombre}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>

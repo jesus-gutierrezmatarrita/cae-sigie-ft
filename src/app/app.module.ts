@@ -7,6 +7,7 @@ import { CoreModule } from './core/core.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SigieNavbarComponent } from './core/sigie-navbar/sigie-navbar.component';
 import { SigieFooterComponent } from './core/sigie-footer/sigie-footer.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { SigieFooterComponent } from './core/sigie-footer/sigie-footer.component
     NoopAnimationsModule,
     CoreModule,
     FlexLayoutModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
