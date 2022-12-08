@@ -9,6 +9,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { CdkStepperModule } from '@angular/cdk/stepper';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [],
   imports: [
@@ -21,7 +23,10 @@ import { MatIconModule } from '@angular/material/icon';
     MatDatepickerModule,
     MatNativeDateModule,
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
+    CdkStepperModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     MatDatepickerModule
@@ -34,8 +39,12 @@ import { MatIconModule } from '@angular/material/icon';
     MatInputModule,
     MatSelectModule,
     MatDatepickerModule,
+    MatNativeDateModule,
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
+    CdkStepperModule,
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class AppMaterialModule { }
