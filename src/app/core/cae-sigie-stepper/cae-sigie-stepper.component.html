@@ -2,9 +2,9 @@
     <h2 [style.margin-left]="'25px'"><b>Publicación de solicitud de apoyo para la realización de una actividad académica,
         dirigida a la población graduada de
         la carrera de Informática Empresarial</b></h2>
-    <mat-stepper [style.background-color]="'#e6e6e6'">
-        <mat-step>
-            <form>
+    <mat-stepper [style.background-color]="'#e6e6e6'" #stepper>
+        <mat-step [stepControl]="academicActivityForm">
+            <form [formGroup]="academicActivityForm">
                 <ng-template matStepLabel>Actividad académica</ng-template>
                 <hr>
                 
@@ -13,12 +13,12 @@
                 <br>
                 <mat-form-field appearance="fill">
                     <mat-label>Nombre de la actividad</mat-label>
-                    <input matInput type="text" required>
+                    <input matInput autocomplete="off" type="text" formControlName = "titulo" required>
                 </mat-form-field>
                 <br>
                 <mat-form-field appearance="fill">
                     <mat-label>Descripción de la actividad</mat-label>
-                    <textarea matInput></textarea>
+                    <textarea matInput autocomplete="off" formControlName = "descripcion"></textarea>
                 </mat-form-field>
                 <br>
                 <mat-form-field appearance="fill">
@@ -39,10 +39,10 @@
                 <br>
                 <mat-form-field appearance="fill">
                     <mat-label>Periodo de aceptación</mat-label>
-                    <input matInput [matDatepicker]="pickerAlt1" required>
+                    <input matInput [matDatepicker]="pickerAceptar" required>
                     <mat-hint>MM/DD/YYYY</mat-hint>
-                    <mat-datepicker-toggle matIconSuffix [for]="pickerAlt1"></mat-datepicker-toggle>
-                    <mat-datepicker #pickerAlt1></mat-datepicker>
+                    <mat-datepicker-toggle matIconSuffix [for]="pickerAceptar"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerAceptar></mat-datepicker>
                 </mat-form-field>
                 <br>
                 <mat-form-field appearance="fill">
@@ -84,22 +84,22 @@
             </strong>
                 <mat-form-field appearance="fill">
                     <mat-label>Correo electrónico</mat-label>
-                    <input type="email" matInput required>
+                    <input type="email" matInput autocomplete="off" required>
                 </mat-form-field>
                 <br>
                 <mat-form-field appearance="fill">
                     <mat-label>Nombre</mat-label>
-                    <input type="text" matInput required>
+                    <input type="text" matInput autocomplete="off" required>
                 </mat-form-field>
                 <br>
                 <mat-form-field appearance="fill">
                     <mat-label>Apellidos</mat-label>
-                    <input type="text" matInput required>
+                    <input type="text" matInput autocomplete="off" required>
                 </mat-form-field>
                 <br>
                 <mat-form-field appearance="fill">
                     <mat-label>Teléfono (opcional)</mat-label>
-                    <input type="tel" matInput>
+                    <input type="tel" autocomplete="off" matInput>
                 </mat-form-field>
                 <br>
                 <button mat-button matStepperNext>Siguiente</button>
@@ -208,7 +208,7 @@
                     <br>
 
 
-                    <button mat-button matStepperNext>Publicar</button>
+                    <button mat-button matStepperNext (click)="addAcademicActivity()">Publicar</button>
                 </div>
             </form>
         </mat-step>
