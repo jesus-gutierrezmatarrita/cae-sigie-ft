@@ -52,9 +52,9 @@ interface academicActivity {
 export class CaeSigieStepperComponent implements OnInit {
   activity_types: Activity_Type[] = []
   campuses: any[] = []
-  newpersonInCharge: any
+  newpersonInCharge: any = [];
   personInChargeEmail:any;
-  date1:any
+  date1:any;
   date1Text:any;
   date2:any
   date2Text:any;
@@ -76,7 +76,7 @@ export class CaeSigieStepperComponent implements OnInit {
   ]
 
   activities: any = [];
-  
+
 
   academicActivityForm = this.fb.group({
     titulo: ['', Validators.required],
@@ -112,8 +112,8 @@ export class CaeSigieStepperComponent implements OnInit {
     this.getCampuses();
     this.getActivityTypes();
   }
-  
- 
+
+
   selectedActivity:any;
 	onSelectedActivity(event:MatSelectChange):void {
 		this.selectedActivity = event.value;
@@ -127,7 +127,7 @@ export class CaeSigieStepperComponent implements OnInit {
     this.name=this.selectedModalidad.name;
 	}
 
- 
+
   selectedRecinto:any;
 	onSelectedRecinto(event:MatSelectChange):void {
 		this.selectedRecinto = event.value;
@@ -180,7 +180,7 @@ export class CaeSigieStepperComponent implements OnInit {
   };
 
   /******************************ACADEMIC ACTIVITY***************************/
-  
+
 
   addAcademicActivity() {
     this.findPersonByEmail(this.personInChargeForm.value.correoElectronico!)
@@ -218,11 +218,11 @@ export class CaeSigieStepperComponent implements OnInit {
 
     console.log(academicActivity)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      
+
       if(this.personInChargeEmail==null){
         this.personInChargeService.savePersonInCharge(personInCharge).subscribe((data) => {
           this.newpersonInCharge.push(data);
-          
+
         },
         error => { console.error(error) }
       )
@@ -233,21 +233,21 @@ export class CaeSigieStepperComponent implements OnInit {
 
     this.academicActivityService.saveAcademicActivity(academicActivity).subscribe((data) => {
       this.activities.push(data);
-      
+
     },
       error => { console.error(error) }
     )
   };
 
-  
+
 
   findPersonByEmail(email: string) {
     this.personInChargeService.findPersonByEmail(email).subscribe((res: {}) => {
       this.personInChargeEmail = res;
-      this.personaId=this.personInChargeEmail.idPersonaCoordinadora
+      this.personaId=this.personInChargeEmail != null ? this.personInChargeEmail.idPersonaCoordinadora : null;
       console.log(this.personInChargeEmail)
     });
-    
+
   }
 
 }
