@@ -89,7 +89,6 @@ export class CaeSigieStepperComponent implements OnInit {
     fechaFin: ['', Validators.required],
     modalidad: ['', Validators.required],
     lugarActividad: ['', Validators.required],
-    tipoDeActividad: ['', Validators.required],
     idActivity: ['', Validators.required]
   });
 
@@ -97,9 +96,7 @@ export class CaeSigieStepperComponent implements OnInit {
     nombre: ['', Validators.required],
     apellidos: ['', Validators.required],
     correoElectronico: ['', Validators.required],
-    telefono: ['', Validators.required],
-    carnet: ['', Validators.required],
-    contraseña: ['', Validators.required]
+    telefono: ['', Validators.required]
   });
 
   constructor(
@@ -274,7 +271,7 @@ export class CaeSigieStepperComponent implements OnInit {
 
       Swal.fire({
         title: 'Correcto!',
-        text: 'La insercion fue realiza con exito',
+        text: 'La inserción fue realizada con éxito',
         icon: 'success',
         confirmButtonText: 'Ok'
       })
