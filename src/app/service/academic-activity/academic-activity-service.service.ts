@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-const API_SERVER = "http://localhost:8085/api/caesigie/actividadacademica/";
+const API_SERVER = "http://localhost:8085/api/caesigie/actividadacademica";
 
 const httpOptions = {
   headers: new HttpHeaders({
