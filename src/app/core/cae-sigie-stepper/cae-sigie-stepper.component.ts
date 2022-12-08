@@ -7,6 +7,7 @@ import { CampusService } from 'src/app/service/campus/campus.service';
 import { PersonInChargeService } from 'src/app/service/personInCharge/person-in-charge.service';
 import * as moment from 'moment';
 import { MatSelect, MatSelectChange } from '@angular/material/select';
+import Swal from 'sweetalert2'
 
 interface Modality {
   id: number;
@@ -19,7 +20,7 @@ interface Activity_Type {
 }
 
 interface personInCharge {
-  idPersonaCoordinadora?:number,
+  idPersonaCoordinadora?: number,
   nombre?: string,
   apellidos?: string,
   correoElectronico?: string,
@@ -53,20 +54,21 @@ export class CaeSigieStepperComponent implements OnInit {
   activity_types: Activity_Type[] = []
   campuses: any[] = []
   newpersonInCharge: any = [];
-  personInChargeEmail:any;
-  date1:any;
-  date1Text:any;
-  date2:any
-  date2Text:any;
-  date3:any
-  date3Text:any;
-  date4:any
-  date4Text:any;
-  idActivity!:string;
-  personaId:any;
-  nombreTipo:any;
-  name:any;
-  nombre:any;
+  personInChargeEmail: any;
+  date1: any;
+  date1Text: any;
+  date2: any
+  date2Text: any;
+  date3: any
+  date3Text: any;
+  date4: any
+  date4Text: any;
+  idActivity!: string;
+  personaId: any;
+  nombreTipo: any;
+  name: any;
+  nombre: any;
+  isLinear = true;
 
 
 
@@ -114,45 +116,45 @@ export class CaeSigieStepperComponent implements OnInit {
   }
 
 
-  selectedActivity:any;
-	onSelectedActivity(event:MatSelectChange):void {
-		this.selectedActivity = event.value;
-    this.nombreTipo=this.selectedActivity.nombreTipo
+  selectedActivity: any;
+  onSelectedActivity(event: MatSelectChange): void {
+    this.selectedActivity = event.value;
+    this.nombreTipo = this.selectedActivity.nombreTipo
     console.log(event.value)
-	}
-
-  selectedModalidad:any;
-	onSelectedModalidad(event:MatSelectChange):void {
-		this.selectedModalidad = event.value;
-    this.name=this.selectedModalidad.name;
-	}
-
-
-  selectedRecinto:any;
-	onSelectedRecinto(event:MatSelectChange):void {
-		this.selectedRecinto = event.value;
-    this.nombre=this.selectedRecinto.nombre;
-	}
-
-  selectDate1(type: string, event: MatDatepickerInputEvent<Date>){
-    this.date1=moment(event.value).format('YYYY-MM-DD');
-    this.date1Text=this.date1
-    this.date1=this.date1+"T00:00:00"
   }
-  selectDate2(type: string, event: MatDatepickerInputEvent<Date>){
-    this.date2=moment(event.value).format('YYYY-MM-DD');
-    this.date2Text=this.date2
-    this.date2=this.date2+"T00:00:00"
+
+  selectedModalidad: any;
+  onSelectedModalidad(event: MatSelectChange): void {
+    this.selectedModalidad = event.value;
+    this.name = this.selectedModalidad.name;
   }
-  selectDate3(type: string, event: MatDatepickerInputEvent<Date>){
-    this.date3=moment(event.value).format('YYYY-MM-DD');
-    this.date3Text=this.date3
-    this.date3=this.date3+"T00:00:00"
+
+
+  selectedRecinto: any;
+  onSelectedRecinto(event: MatSelectChange): void {
+    this.selectedRecinto = event.value;
+    this.nombre = this.selectedRecinto.nombre;
   }
-  selectDate4(type: string, event: MatDatepickerInputEvent<Date>){
-    this.date4=moment(event.value).format('YYYY-MM-DD');
-    this.date4Text=this.date4
-    this.date4=this.date4+"T00:00:00"
+
+  selectDate1(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.date1 = moment(event.value).format('YYYY-MM-DD');
+    this.date1Text = this.date1
+    this.date1 = this.date1 + "T00:00:00"
+  }
+  selectDate2(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.date2 = moment(event.value).format('YYYY-MM-DD');
+    this.date2Text = this.date2
+    this.date2 = this.date2 + "T00:00:00"
+  }
+  selectDate3(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.date3 = moment(event.value).format('YYYY-MM-DD');
+    this.date3Text = this.date3
+    this.date3 = this.date3 + "T00:00:00"
+  }
+  selectDate4(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.date4 = moment(event.value).format('YYYY-MM-DD');
+    this.date4Text = this.date4
+    this.date4 = this.date4 + "T00:00:00"
   }
 
   /***************************METHODS***********************************/
@@ -183,68 +185,108 @@ export class CaeSigieStepperComponent implements OnInit {
 
 
   addAcademicActivity() {
-    this.findPersonByEmail(this.personInChargeForm.value.correoElectronico!)
+    var f1 = new Date(this.date1Text)
+    var f2 = new Date(this.date2Text)
+    var f3 = new Date(this.date3Text)
+    var f4 = new Date(this.date4Text)
+    f1.setHours(0,0,0,0);
+    f2.setHours(0,0,0,0);
+    f3.setHours(0,0,0,0);
+    f4.setHours(0,0,0,0);
 
-    const personInCharge = {
-      "idPersonaCoordinadora":this.personaId,
-      "nombre": this.personInChargeForm.value.nombre!,
-      "apellidos": this.personInChargeForm.value.apellidos!,
-      "correoElectronico": this.personInChargeForm.value.correoElectronico!,
-      "telefono": this.personInChargeForm.value.telefono!,
-      "carnet": "A0000",
-      "contraseña": "12345"
-    }
-    console.log(personInCharge)
+    if (f4 < f3 || f3.getTime()==f4.getTime()) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Las fecha de inicio y fin no tienen consistencia',
+        icon: 'error',
+        confirmButtonText: 'Ok'
+      })
 
-   const tipoActividad={
-    "idTipo":this.selectedActivity.idTipo!,
-    "nombreTipo":this.selectedActivity.nombreTipo!
-   }
+    }else if(f1<f3 || f1>f4 || f2<f3 || f2>f4 || f1.getTime()==f2.getTime() || f2.getTime()==f3.getTime() || f2.getTime()==f4.getTime() || f1.getTime()==f3.getTime() || f1.getTime()==f4.getTime()){
+      Swal.fire({
+        title: 'Error!',
+        text: 'Las fechas alternativas no estan dentro del periodo de aceptacion',
+        icon: 'error',
+        confirmButtonText: 'Ok'
+      })
 
-    const academicActivity = {
-      "titulo": this.academicActivityForm.value.titulo!,
-      "descripcion": this.academicActivityForm.value.descripcion!,
-      "fecha1RealizacionDeActividad": this.date1!,
-      "fecha2RealizacionDeActividad": this.date2!,
-      "fechaInicio": this.date3!,
-      "fechaFin": this.date4!,
-      "modalidad": this.selectedModalidad.name!,
-      "lugarActividad": this.selectedRecinto.nombre!,
-      "respuestas": [],
-      "tipoDeActividad": tipoActividad,
-      "personaCoordinadora": personInCharge,
-      "recintos": []
-    }
 
-    console.log(academicActivity)
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    }else {
 
-      if(this.personInChargeEmail==null){
+
+
+
+      this.findPersonByEmail(this.personInChargeForm.value.correoElectronico!)
+
+      const personInCharge = {
+        "idPersonaCoordinadora": this.personaId,
+        "nombre": this.personInChargeForm.value.nombre!,
+        "apellidos": this.personInChargeForm.value.apellidos!,
+        "correoElectronico": this.personInChargeForm.value.correoElectronico!,
+        "telefono": this.personInChargeForm.value.telefono!,
+        "carnet": "A0000",
+        "contraseña": "12345"
+      }
+      console.log(personInCharge)
+
+      const tipoActividad = {
+        "idTipo": this.selectedActivity.idTipo!,
+        "nombreTipo": this.selectedActivity.nombreTipo!
+      }
+
+      const academicActivity = {
+        "titulo": this.academicActivityForm.value.titulo!,
+        "descripcion": this.academicActivityForm.value.descripcion!,
+        "fecha1RealizacionDeActividad": this.date1!,
+        "fecha2RealizacionDeActividad": this.date2!,
+        "fechaInicio": this.date3!,
+        "fechaFin": this.date4!,
+        "modalidad": this.selectedModalidad.name!,
+        "lugarActividad": this.selectedRecinto.nombre!,
+        "respuestas": [],
+        "tipoDeActividad": tipoActividad,
+        "personaCoordinadora": personInCharge,
+        "recintos": []
+      }
+
+      console.log(academicActivity)
+      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      if (this.personInChargeEmail == null) {
         this.personInChargeService.savePersonInCharge(personInCharge).subscribe((data) => {
           this.newpersonInCharge.push(data);
 
         },
+          error => { console.error(error) }
+        )
+      }
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      console.log(academicActivity)
+
+      this.academicActivityService.saveAcademicActivity(academicActivity).subscribe((data) => {
+        this.activities.push(data);
+
+
+      },
         error => { console.error(error) }
       )
-      }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    console.log(academicActivity)
-
-    this.academicActivityService.saveAcademicActivity(academicActivity).subscribe((data) => {
-      this.activities.push(data);
-
-    },
-      error => { console.error(error) }
-    )
-  };
+      Swal.fire({
+        title: 'Correcto!',
+        text: 'La insercion fue realiza con exito',
+        icon: 'success',
+        confirmButtonText: 'Ok'
+      })
+    }
+  }
 
 
 
   findPersonByEmail(email: string) {
     this.personInChargeService.findPersonByEmail(email).subscribe((res: {}) => {
       this.personInChargeEmail = res;
-      this.personaId=this.personInChargeEmail != null ? this.personInChargeEmail.idPersonaCoordinadora : null;
+      this.personaId = this.personInChargeEmail != null ? this.personInChargeEmail.idPersonaCoordinadora : null;
       console.log(this.personInChargeEmail)
     });
 

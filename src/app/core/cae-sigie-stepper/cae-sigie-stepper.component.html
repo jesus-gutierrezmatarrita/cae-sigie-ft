@@ -2,7 +2,7 @@
     <h2 [style.margin-left]="'25px'"><b>Publicación de solicitud de apoyo para la realización de una actividad académica,
         dirigida a la población graduada de
         la carrera de Informática Empresarial</b></h2>
-    <mat-stepper [style.background-color]="'#e6e6e6'" #stepper>
+    <mat-stepper [style.background-color]="'#e6e6e6'" [linear]="isLinear" #stepper>
         <mat-step [stepControl]="academicActivityForm">
             <form [formGroup]="academicActivityForm">
                 <ng-template matStepLabel>Actividad académica</ng-template>
@@ -23,7 +23,7 @@
                 <br>
                 <mat-form-field appearance="fill">
                     <mat-label>Alternativa 1 de fecha de la actividad</mat-label>
-                    <input matInput [matDatepicker]="pickerAlt1" (dateInput)="selectDate1('input', $event)" (dateChange)="selectDate1('change', $event)" required>
+                    <input matInput [matDatepicker]="pickerAlt1" formControlName="fecha1RealizacionDeActividad" (dateInput)="selectDate1('input', $event)" (dateChange)="selectDate1('change', $event)" required>
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="pickerAlt1"></mat-datepicker-toggle>
                     <mat-datepicker #pickerAlt1></mat-datepicker>
@@ -31,7 +31,7 @@
                 <br>
                 <mat-form-field appearance="fill">
                     <mat-label>Alternativa 2 de fecha de la actividad</mat-label>
-                    <input matInput [matDatepicker]="pickerAlt2" (dateInput)="selectDate2('input', $event)" (dateChange)="selectDate2('change', $event)"  required>
+                    <input matInput [matDatepicker]="pickerAlt2" formControlName="fecha2RealizacionDeActividad" (dateInput)="selectDate2('input', $event)" (dateChange)="selectDate2('change', $event)"  required>
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="pickerAlt2"></mat-datepicker-toggle>
                     <mat-datepicker #pickerAlt2></mat-datepicker>
@@ -39,7 +39,7 @@
                 <br>
                 <mat-form-field appearance="fill">
                     <mat-label>Periodo Inicial</mat-label>
-                    <input matInput [matDatepicker]="pickerInicial" (dateInput)="selectDate3('input', $event)" (dateChange)="selectDate3('change', $event)"  required>
+                    <input matInput [matDatepicker]="pickerInicial" formControlName="fechaInicio" (dateInput)="selectDate3('input', $event)" (dateChange)="selectDate3('change', $event)"  required>
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="pickerInicial"></mat-datepicker-toggle>
                     <mat-datepicker #pickerInicial></mat-datepicker>
@@ -47,7 +47,7 @@
                 <br>
                 <mat-form-field appearance="fill">
                     <mat-label>Periodo Final</mat-label>
-                    <input matInput [matDatepicker]="pickerFinal" (dateInput)="selectDate4('input', $event)" (dateChange)="selectDate4('change', $event)"  required>
+                    <input matInput [matDatepicker]="pickerFinal" formControlName="fechaFin" (dateInput)="selectDate4('input', $event)" (dateChange)="selectDate4('change', $event)"  required>
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="pickerFinal"></mat-datepicker-toggle>
                     <mat-datepicker #pickerFinal></mat-datepicker>
@@ -64,7 +64,7 @@
                 <br>
                 <mat-form-field appearance="fill">
                     <mat-label>Modalidad</mat-label>
-                    <mat-select #modalidad (selectionChange)="onSelectedModalidad($event)">
+                    <mat-select #modalidad formControlName="modalidad" (selectionChange)="onSelectedModalidad($event)">
                         <mat-option *ngFor="let modality of modalities" [value]="modality">
                             {{modality.name}}
                         </mat-option>
@@ -73,7 +73,7 @@
                 <br>
                 <mat-form-field appearance="fill">
                     <mat-label>Recinto organizador</mat-label>
-                    <mat-select #recinto (selectionChange)="onSelectedRecinto($event)">
+                    <mat-select #recinto formControlName="lugarActividad" (selectionChange)="onSelectedRecinto($event)">
                         <mat-option *ngFor="let campus of campuses" [value]="campus">
                             {{campus.nombre}}
                         </mat-option>
