@@ -17,7 +17,11 @@ export class PersonInChargeService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public findPersonByEmail(email: string): Observable<any> {
-    return this.httpClient.get(API_SERVER + "/{" + email + "}", httpOptions);
+  public savePersonInCharge(personInCharge: any): Observable<any> {
+    return this.httpClient.post(API_SERVER,personInCharge, httpOptions);
+  }
+
+  public findPersonByEmail(email:string): Observable<any> {
+    return this.httpClient.get(API_SERVER + "/"+ email, httpOptions);
   }
 }

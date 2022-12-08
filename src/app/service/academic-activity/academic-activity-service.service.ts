@@ -23,6 +23,6 @@ export class AcademicActivityServiceService {
   }
 
   public saveAcademicActivity(academicActivity: any): Observable<any> {
-    return this.httpClient.post(API_SERVER, httpOptions);
+    return this.httpClient.post(API_SERVER,academicActivity, httpOptions);
   }
 }

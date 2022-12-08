@@ -23,7 +23,7 @@
                 <br>
                 <mat-form-field appearance="fill">
                     <mat-label>Alternativa 1 de fecha de la actividad</mat-label>
-                    <input matInput [matDatepicker]="pickerAlt1" required>
+                    <input matInput [matDatepicker]="pickerAlt1" (dateInput)="selectDate1('input', $event)" (dateChange)="selectDate1('change', $event)" required>
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="pickerAlt1"></mat-datepicker-toggle>
                     <mat-datepicker #pickerAlt1></mat-datepicker>
@@ -31,24 +31,32 @@
                 <br>
                 <mat-form-field appearance="fill">
                     <mat-label>Alternativa 2 de fecha de la actividad</mat-label>
-                    <input matInput [matDatepicker]="pickerAlt2" required>
+                    <input matInput [matDatepicker]="pickerAlt2" (dateInput)="selectDate2('input', $event)" (dateChange)="selectDate2('change', $event)"  required>
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="pickerAlt2"></mat-datepicker-toggle>
                     <mat-datepicker #pickerAlt2></mat-datepicker>
                 </mat-form-field>
                 <br>
                 <mat-form-field appearance="fill">
-                    <mat-label>Periodo de aceptación</mat-label>
-                    <input matInput [matDatepicker]="pickerAceptar" required>
+                    <mat-label>Periodo Inicial</mat-label>
+                    <input matInput [matDatepicker]="pickerInicial" (dateInput)="selectDate3('input', $event)" (dateChange)="selectDate3('change', $event)"  required>
                     <mat-hint>MM/DD/YYYY</mat-hint>
-                    <mat-datepicker-toggle matIconSuffix [for]="pickerAceptar"></mat-datepicker-toggle>
-                    <mat-datepicker #pickerAceptar></mat-datepicker>
+                    <mat-datepicker-toggle matIconSuffix [for]="pickerInicial"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerInicial></mat-datepicker>
+                </mat-form-field>
+                <br>
+                <mat-form-field appearance="fill">
+                    <mat-label>Periodo Final</mat-label>
+                    <input matInput [matDatepicker]="pickerFinal" (dateInput)="selectDate4('input', $event)" (dateChange)="selectDate4('change', $event)"  required>
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="pickerFinal"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerFinal></mat-datepicker>
                 </mat-form-field>
                 <br>
                 <mat-form-field appearance="fill">
                     <mat-label>Tipo de actividad</mat-label>
-                    <mat-select>
-                        <mat-option *ngFor="let activity_type of activity_types" [value]="activity_type.idTipo">
+                    <mat-select [(ngModel)]="idActivity" formControlName="idActivity"  (selectionChange)="onSelectedActivity($event)">
+                        <mat-option *ngFor="let activity_type of activity_types"  [value]="activity_type" >
                             {{activity_type.nombreTipo}}
                         </mat-option>
                     </mat-select>
@@ -56,8 +64,8 @@
                 <br>
                 <mat-form-field appearance="fill">
                     <mat-label>Modalidad</mat-label>
-                    <mat-select>
-                        <mat-option *ngFor="let modality of modalities" [value]="modality.id">
+                    <mat-select #modalidad (selectionChange)="onSelectedModalidad($event)">
+                        <mat-option *ngFor="let modality of modalities" [value]="modality">
                             {{modality.name}}
                         </mat-option>
                     </mat-select>
@@ -65,8 +73,8 @@
                 <br>
                 <mat-form-field appearance="fill">
                     <mat-label>Recinto organizador</mat-label>
-                    <mat-select>
-                        <mat-option *ngFor="let campus of campuses" [value]="campus.idRecinto">
+                    <mat-select #recinto (selectionChange)="onSelectedRecinto($event)">
+                        <mat-option *ngFor="let campus of campuses" [value]="campus">
                             {{campus.nombre}}
                         </mat-option>
                     </mat-select>
@@ -75,8 +83,8 @@
                 <button mat-button matStepperNext>Siguiente</button>
             </form>
         </mat-step>
-        <mat-step>
-            <form>
+        <mat-step [stepControl]="personInChargeForm">
+            <form [formGroup]="personInChargeForm">
                 <ng-template matStepLabel>Persona encargada</ng-template>
                 <hr>
                 <strong>
@@ -84,29 +92,29 @@
             </strong>
                 <mat-form-field appearance="fill">
                     <mat-label>Correo electrónico</mat-label>
-                    <input type="email" matInput autocomplete="off" required>
+                    <input type="email" matInput autocomplete="off" formControlName = "correoElectronico" required>
                 </mat-form-field>
                 <br>
                 <mat-form-field appearance="fill">
                     <mat-label>Nombre</mat-label>
-                    <input type="text" matInput autocomplete="off" required>
+                    <input type="text" matInput autocomplete="off" formControlName = "nombre" required>
                 </mat-form-field>
                 <br>
                 <mat-form-field appearance="fill">
                     <mat-label>Apellidos</mat-label>
-                    <input type="text" matInput autocomplete="off" required>
+                    <input type="text" matInput autocomplete="off" formControlName = "apellidos" required>
                 </mat-form-field>
                 <br>
                 <mat-form-field appearance="fill">
                     <mat-label>Teléfono (opcional)</mat-label>
-                    <input type="tel" autocomplete="off" matInput>
+                    <input type="tel" autocomplete="off" formControlName = "telefono" matInput>
                 </mat-form-field>
                 <br>
                 <button mat-button matStepperNext>Siguiente</button>
             </form>
         </mat-step>
-        <mat-step>
-            <form>
+        <mat-step [formGroup]="personInChargeForm">
+            <form [formGroup]="personInChargeForm">
                 <ng-template matStepLabel>Resumen</ng-template>
                 <hr>
                 <div class="container-summary">
@@ -120,49 +128,57 @@
                         <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="282px" fxLayoutAlign="start center"
                             class="header-container">
                             <label>Nombre de actividad</label>
-                            <label>Taller de Github</label>
+                            <label>{{this.academicActivityForm.value.titulo}}</label>
                         </div>
 
                         <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="246px" fxLayoutAlign="start center"
                             class="header-container">
                             <label>Descripción de la actividad</label>
-                            <label>La siguiente actividad...</label>
+                            <label>{{this.academicActivityForm.value.descripcion}}</label>
                         </div>
 
                         <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="184px" fxLayoutAlign="start center"
                             class="header-container">
                             <label>Alternativa 1 de fecha de la actividad </label>
-                            <label>24 de junio de 2023 </label>
+                            <label>{{this.date1Text}}</label>
                         </div>
 
                         <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="184px" fxLayoutAlign="start center"
                             class="header-container">
                             <label>Alternativa 2 de fecha de la actividad </label>
-                            <label>24 de junio de 2023 </label>
+                            <label>{{this.date2Text}} </label>
                         </div>
 
-                        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="80px" fxLayoutAlign="start center"
+                        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="323px" fxLayoutAlign="start center"
                             class="header-container">
-                            <label>Periodo de aceptacion de respuestas para la consulta </label>
-                            <label>28 de junio de 2023 </label>
+                            <label>Periodo Inicial </label>
+                            <label>{{this.date3Text}} </label>
                         </div>
+
+                        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="329px" fxLayoutAlign="start center"
+                            class="header-container">
+                            <label>Periodo Final </label>
+                            <label>{{this.date4Text}} </label>
+                        </div>
+
+                        
 
                         <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="305px" fxLayoutAlign="start center"
                             class="header-container">
                             <label>Tipo de actividad</label>
-                            <label>Taller</label>
+                            <label>{{this.nombreTipo}}</label>
                         </div>
 
                         <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="346px" fxLayoutAlign="start center"
                             class="header-container">
                             <label>Modalidad</label>
-                            <label>Presencial</label>
+                            <label>{{this.name}}</label>
                         </div>
 
                         <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="364px" fxLayoutAlign="start center"
                             class="header-container">
                             <label>Recinto </label>
-                            <label>Sede del Atlántico, Recinto de Paraíso </label>
+                            <label>{{this.nombre}} </label>
                         </div>
 
                     </div>
@@ -180,25 +196,25 @@
                             <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="368px" fxLayoutAlign="start center"
                                 class="header-container">
                                 <label>Correo</label>
-                                <label>johndoe@example.com </label>
+                                <label>{{this.personInChargeForm.value.correoElectronico}}</label>
                             </div>
 
                             <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="357px" fxLayoutAlign="start center"
                                 class="header-container">
                                 <label>Nombre</label>
-                                <label>John </label>
+                                <label>{{this.personInChargeForm.value.nombre}} </label>
                             </div>
 
                             <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="351px" fxLayoutAlign="start center"
                                 class="header-container">
                                 <label>Apellidos</label>
-                                <label>Doe </label>
+                                <label>{{this.personInChargeForm.value.apellidos}} </label>
                             </div>
 
                             <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="355px" fxLayoutAlign="start center"
                                 class="header-container">
                                 <label>Teléfono </label>
-                                <label>88888888 </label>
+                                <label>{{this.personInChargeForm.value.telefono}} </label>
                             </div>
 
                         </div>
